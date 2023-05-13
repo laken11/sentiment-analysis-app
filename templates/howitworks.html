@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Emotion Analysis App - How It Works</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static "css/htw.css" %}">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Emotion Analysis App</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="{% url "index" %}">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url "team" %}">Team</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url "htw" %}">How It Works</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<h1 class="text-center mb-5">How It Works</h1>
+		<div class="row steps">
+			<div class="col-md-4 step">
+				<div class="step-icon">1</div>
+				<h3 class="step-title">Input Text</h3>
+				<p class="step-description">Users enter text into the app, which can be in any language and of any length.</p>
+			</div>
+			<div class="col-md-4 step">
+				<div class="step-icon">2</div>
+				<h3 class="step-title">Analyze Emotions</h3>
+				<p class="step-description">The app uses natural language processing and machine learning algorithms to identify the emotions expressed in the text.</p>
+			</div>
+			<div class="col-md-4 step">
+				<div class="step-icon">3</div>
+				<h3 class="step-title">Display Results</h3>
+				<p class="step-description">The app displays the emotional state of the text, including the primary emotion and the intensity of each emotion detected.</p>
+			</div>
+            <div class="col-md-4 step">
+				<div class="step-icon">3</div>
+				<h3 class="step-title">Display Results</h3>
+				<p class="step-description">The app displays the emotional state of the text, including the primary emotion and the intensity of each emotion detected.</p>
+			</div>
+            <div class="col-md-4 step">
+				<div class="step-icon">3</div>
+				<h3 class="step-title">Display Results</h3>
+				<p class="step-description">The app displays the emotional state of the text, including the primary emotion and the intensity of each emotion detected.</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html

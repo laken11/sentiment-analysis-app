@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Emotion Analysis App - Our Team</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static "css/team.css" %}">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Emotion Analysis App</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="{% url "index" %}">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url "team" %}">Team</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url "htw" %}">How It Works</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 mx-auto">
+				<h1 class="text-center mb-5">Our Team</h1>
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">John Doe</h4>
+						<p class="card-text">John is a full-stack web developer with experience in HTML, CSS, JavaScript, and several front-end frameworks.</p>
+						<a href="#" class="btn btn-primary">View Profile</a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Jane Smith</h4>
+						<p class="card-text">Jane is a data scientist with expertise in natural language processing and machine learning algorithms.</p>
+						<a href="#" class="btn btn-primary">View Profile</a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Bob Johnson</h4>
+						<p class="card-text">Bob is a UX designer with experience in user research, wireframing, and prototyping.</p>
+						<a href="#" class="btn btn-primary">View Profile</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
