@@ -1,11 +1,22 @@
+import os
+from typing import List
+
 from textblob.classifiers import NaiveBayesClassifier
 import pandas as pd
 import pickle
 
+models: List = [
+    "Depression",
+    "Bipolar Disorder",
+    "Ptsd",
+    "Schizophrenia",
+    "Psychosis"
+]
+
 
 def train_and_test(data_set_file: str):
     try:
-        file_name = f"../scrapping/twitter_data/{data_set_file}.csv"
+        file_name = f"backend{os.path.sep}scrapping{os.path.sep}twitter_data{os.path.sep}{data_set_file}.csv"
         df = pd.read_csv(file_name, header=None, names=["text", "label"],
                          skiprows=1)
         df.fillna("", inplace=True)
@@ -35,20 +46,20 @@ def _test(test_df: pd.DataFrame, model: str):
     test = list(test_df.itertuples(index=False, name=None))
     classifier: NaiveBayesClassifier = _load_model(model)
     accuracy = classifier.accuracy(test)
-    with open(f"accuracy.txt", "a") as file:
+    with open(f"models/accuracy.txt", "a") as file:
         file.write(f"{model} accuracy score is: {accuracy}\n")
-        file.write("--------------------------------------")
+        file.write("------------------------------------------------------------------------------------------------\n")
 
 
 def _save_model(classifier: NaiveBayesClassifier, model: str):
     # Save the trained model to a file
-    with open(f"{model}.pkl", "wb") as file:
+    with open(f"models/{model}.pkl", "wb") as file:
         pickle.dump(classifier, file)
 
 
 def _load_model(model: str):
     # Load the trained model from the file
-    with open(f"{model}.pkl", "rb") as file:
+    with open(f"models/{model}.pkl", "rb") as file:
         return pickle.load(file)
 
 
@@ -58,4 +69,11 @@ def classify(stressor: str, statement: str):
     return classifier.classify(statement)
 
 
-train_and_test("Ptsd")
+def main():
+    for item in models:
+        train_and_test(item)
+        print(f"{item} done")
+
+
+if __name__ == "__main__":
+    main()
