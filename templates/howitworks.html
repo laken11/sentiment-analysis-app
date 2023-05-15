@@ -2,59 +2,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Emotion Analysis App - How It Works</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="{% static "css/htw.css" %}">
+    <title>Emotion Analysis App - How It Works</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static "css/htw.css" %}">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Emotion Analysis App</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active">
-					<a class="nav-link" href="{% url "index" %}">Home <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{% url "team" %}">Team</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{% url "htw" %}">How It Works</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	<div class="container">
-		<h1 class="text-center mb-5">How It Works</h1>
-		<div class="row steps">
-			<div class="col-md-4 step">
-				<div class="step-icon">1</div>
-				<h3 class="step-title">Input Text</h3>
-				<p class="step-description">Users enter text into the app, which can be in any language and of any length.</p>
-			</div>
-			<div class="col-md-4 step">
-				<div class="step-icon">2</div>
-				<h3 class="step-title">Analyze Emotions</h3>
-				<p class="step-description">The app uses natural language processing and machine learning algorithms to identify the emotions expressed in the text.</p>
-			</div>
-			<div class="col-md-4 step">
-				<div class="step-icon">3</div>
-				<h3 class="step-title">Display Results</h3>
-				<p class="step-description">The app displays the emotional state of the text, including the primary emotion and the intensity of each emotion detected.</p>
-			</div>
-            <div class="col-md-4 step">
-				<div class="step-icon">3</div>
-				<h3 class="step-title">Display Results</h3>
-				<p class="step-description">The app displays the emotional state of the text, including the primary emotion and the intensity of each emotion detected.</p>
-			</div>
-            <div class="col-md-4 step">
-				<div class="step-icon">3</div>
-				<h3 class="step-title">Display Results</h3>
-				<p class="step-description">The app displays the emotional state of the text, including the primary emotion and the intensity of each emotion detected.</p>
-			</div>
-		</div>
-	</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Emotion Analysis App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url "index" %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url "team" %}">Team</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url "htw" %}">How It Works</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <h1 class="text-center mb-5">How It Works</h1>
+    <div class="row steps">
+        <div class="col-md-4 step">
+            <div class="step-icon">1</div>
+            <h3 class="step-title">Data acquisition</h3>
+            <p class="step-description">Twitter and reddit which are both popular social media application where
+                people engage in discussions and expressed there thoughts and emotions was scrap for data based on
+                some know stressors and there identifiers, each stressor scrap was able to generate at least 1000 text
+                data dataset.</p>
+        </div>
+        <div class="col-md-4 step">
+            <div class="step-icon">2</div>
+            <h3 class="step-title">Data processing</h3>
+            <p class="step-description">After the data for each stressor has been scrapped and saved as a csv file
+                containing just a colum called text, each cel with in this dataset is preprocessed to remove unnecessary
+                characters and further tokenized. Tokenization is a text preprocessing step in sentiment analysis that
+                involves breaking down the text into individual words or tokens(datacamp.com). This is an essential step
+                in analyzing text data as it helps to separate individual words from the raw text, making it easier
+                to analyze and understand(towardsdatascience.com). Tokenization also helps to remove punctuation,
+                whitespace,
+                and other irrelevant characters from the text. By tokenizing sentences, we can assign sentiment values
+                to each word based on a sentiment lexicon, and then aggregate them to get the overall sentiment of the
+                sentence(link.springer.com)
+            </p>
+        </div>
+        <div class="col-md-4 step">
+            <div class="step-icon">3</div>
+            <h3 class="step-title">Sentiment analysis</h3>
+            <p class="step-description">Sentiment analysis is the process of analysis text and discovering the negative
+                and positivity of the text,
+                this is then done inline with our aim, which is to identify emotional state in text and classify them
+                into True possible,
+                True negative, False positive and False negative.Each dataset is also subjected to this and then
+                eventually categorized into these category.
+                A text is analysis True positive if it shows high sense of negativity and contains our identified
+                stressors in them, a text is analysis
+                False positive if it expresses negativity but does not contain the identified stressor, a text is True
+                negative if it contains
+                the identified stressor but does not show any form of negativity in them and finally a text is False
+                negative if it shows no sign
+                of negativity at all and does not contain the identified stressor.
+            </p>
+        </div>
+        <div class="col-md-4 step">
+            <div class="step-icon">4</div>
+            <h3 class="step-title">Model training and testing</h3>
+            <p class="step-description">These models identified are then used to train and test these models for
+                accuracy
+                and other measures. The dataset that have been subjected to stage one, two and three
+                where
+                dividend into train ad test data which is then used for training and testing. After the testing,
+                the accuracy score were taken and the trained models recorded high accuracy sources
+            </p>
+        </div>
+         <div class="col-md-4 step">
+            <div class="step-icon">4</div>
+            <h3 class="step-title">Web application</h3>
+            <p class="step-description">
+                A web application is developed,to enable users to select the identified stressor, pasted the text and subject them to analysis
+            </p>
+        </div>
+        <div class="col-md-4 step">
+            <div class="step-icon">5</div>
+            <h3 class="step-title">Model classification</h3>
+            <p class="step-description">After these models where trained and tested, it is then used for classification of any given text.
+                User select the identified stressor and input the text on the webpage then
+                user request for analysis and the text is analyzed, and then the result is displayed the user</p>
+        </div>
+    </div>
+</div>
 </body>
 </html
