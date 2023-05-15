@@ -14,6 +14,7 @@ models: List = [
 ]
 
 
+
 def train_and_test(data_set_file: str):
     try:
         file_name = f"backend{os.path.sep}scrapping{os.path.sep}twitter_data{os.path.sep}{data_set_file}.csv"
@@ -46,20 +47,20 @@ def _test(test_df: pd.DataFrame, model: str):
     test = list(test_df.itertuples(index=False, name=None))
     classifier: NaiveBayesClassifier = _load_model(model)
     accuracy = classifier.accuracy(test)
-    with open(f"models/accuracy.txt", "a") as file:
+    with open(f"models{os.path.sep}accuracy.txt", "a") as file:
         file.write(f"{model} accuracy score is: {accuracy}\n")
         file.write("------------------------------------------------------------------------------------------------\n")
 
 
 def _save_model(classifier: NaiveBayesClassifier, model: str):
     # Save the trained model to a file
-    with open(f"models/{model}.pkl", "wb") as file:
+    with open(f"models{os.path.sep}{model}.pkl", "wb") as file:
         pickle.dump(classifier, file)
 
 
 def _load_model(model: str):
     # Load the trained model from the file
-    with open(f"models/{model}.pkl", "rb") as file:
+    with open(f"models{os.path.sep}{model}.pkl", "rb") as file:
         return pickle.load(file)
 
 
