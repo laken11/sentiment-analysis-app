@@ -4,6 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 COPY . .
-RUN pip install -r requirements.txt
+RUN pip install -r requirments.txt
 RUN echo "Package Installation done"
+EXPOSE 80
 CMD ["python3", "manage.py", "runserver","0.0.0.0:80"]
