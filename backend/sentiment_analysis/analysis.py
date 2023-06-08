@@ -1,17 +1,49 @@
 import glob
 import re
+from typing import Dict
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from textblob import TextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from nltk.sentiment import SentimentIntensityAnalyzer
 import pandas as pd
-from backend.scrapping.twitter import queries_store
 
 TRUE_POSITIVE = "True Positive"
 FALSE_POSITIVE = "False Positive"
 FALSE_NEGATIVE = "False Negative"
 TRUE_NEGATIVE = "True Negative"
+
+DEPRESSION = ["depression", "feelings", "sadness", "hopelessness", "emptiness", "angry", "outbursts",
+                   "irritability", "frustration", "loss of interest", "worthlessness", "guilt", "failures",
+                   "self blame", "thoughts of death", "suicide", "anxiety"]
+
+
+BIPOLAR_DISORDER = ["bipolar disorder", "mood swings", "loss of interest", "euphoria", "suicide attempt",
+                         "talkativeness", "racing thought", "alcohol abuse"]
+
+
+SCHIZOPHRENIA =  ["schizophrenia", "thought disorder", "delusion", "amnesia", "false belief of superiority",
+                      "disorientation", "self-harm", "aggression", "hostility", "lack of restraint",
+                      "incoherent speech", "circumstantial speech", "rapid speaking", "frenzied speaking",
+                      "speech disorder"]
+
+
+PSYCHOSIS = ["psychosis", "depressive symptoms", "general anxiety", "social isolation", "neglecting self-care",
+                  "feelings of suspicion", "lower tolerance to stress", "mild disturbance in language",
+                  "sleep problems", "hallucinations"]
+
+
+PTSD = ["ptsd", "nightmares", "flashbacks", "heightened reactivity to stimuli", "anxiety",
+             "depressed mood", "Post-Traumatic Stress Disorder", "severe emotional distress"]
+
+stressors = {
+    "Depression": DEPRESSION,
+    "Bipolar Disorder": BIPOLAR_DISORDER,
+    "Schizophrenia": SCHIZOPHRENIA,
+    "Psychosis": PSYCHOSIS,
+    "Ptsd": PTSD
+}
 
 
 def open_file(path_to_file: str) -> pd.DataFrame:
@@ -25,6 +57,7 @@ def save_file(df: pd.DataFrame, path_to_file: str):
 
 # preprocess the tweets
 def preprocess_tweet(tweet):
+    nltk.download('all')
     # convert to lowercase
     if pd.isna(tweet):
         return
@@ -59,38 +92,51 @@ def analyze_sentiment(tweet):
 
 def determine_the_emotional_state(filtered_tweet, stressors):
     try:
+        filtered_tweet = preprocess_tweet(filtered_tweet)
         sentiment_record = analyze_sentiment(filtered_tweet)
         stressor_present = any(keyword in filtered_tweet for keyword in stressors)
         # determine the emotional state based on stressors and sentiment
-        if stressor_present and sentiment_record[0] < 0:
+        if stressor_present and sentiment_record[1] <= -0.05:
             return TRUE_POSITIVE
-        elif stressor_present and sentiment_record[1] < -0.5:
-            return TRUE_POSITIVE
-        elif sentiment_record[0] < 0:
+        elif sentiment_record[1] <= -0.05 and not stressor_present:
             return FALSE_POSITIVE
-        elif sentiment_record[0] > 0:
+        elif sentiment_record[1] > -0.05 and sentiment_record[1] < 0.05 and not sentiment_record:
             return TRUE_NEGATIVE
-        else:
+        elif sentiment_record[1] > -0.05 and sentiment_record[1] < 0.05 and sentiment_record:
             return FALSE_NEGATIVE
+        elif sentiment_record[1] >= 0.05:
+            return TRUE_NEGATIVE
+        elif sentiment_record[1] >= 0.05 and stressor_present:
+            return FALSE_NEGATIVE
+       
     except Exception:
-        return FALSE_NEGATIVE
+        return TRUE_NEGATIVE
 
 
-def get_stressors(file: str):
-    for key, query in queries_store.items():
-        if key in file:
-            return query
+def run_semtiment_analysis_for_view(text: str) -> Dict:
+    outcome = {}
+    for stressor, identifiers in stressors.items():
+        text = preprocess_tweet(text)
+        result = determine_the_emotional_state(text, identifiers)
+        outcome[stressor] = result
+    return outcome
+        
+    
+# def get_stressors(file: str):
+#     for key, query in queries_store.items():
+#         if key in file:
+#             return query
 
 
-def main():
-    csv_files = glob.glob("../scrapping/twitter_data/*.csv")
-    # preprocess the tweets
-    for csv_file in csv_files:
-        stressor = get_stressors(csv_file)
-        df = open_file(csv_file)
-        df = df.applymap(preprocess_tweet)
-        df["Category"] = df['Text'].apply(determine_the_emotional_state, args=(stressor,))
-        save_file(df, csv_file)
+# def main():
+#     csv_files = glob.glob("../scrapping/twitter_data/*.csv")
+#     # preprocess the tweets
+#     for csv_file in csv_files:
+#         stressor = get_stressors(csv_file)
+#         df = open_file(csv_file)
+#         df = df.applymap(preprocess_tweet)
+#         df["Category"] = df['Text'].apply(determine_the_emotional_state, args=(stressor,))
+#         save_file(df, csv_file)
 
 
-main()
+# main()

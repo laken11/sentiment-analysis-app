@@ -37,7 +37,7 @@
         <div class="col-md-6 mx-auto">
             <h1 class="text-center mb-5">Sentiment Analysis App</h1>
             <form id="input-form">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="stressor">Stressor</label>
                     <select name="stressor" id="stressor" class="styled-select">
                       <option value="Depression">Depression</option>
@@ -46,7 +46,7 @@
                       <option value="Schizophrenia">Schizophrenia</option>
                       <option value="Psychosis">Psychosis</option>
                     </select>
-                  </div>
+                  </div> -->
                   
                 <div class="form-group">
                     <label for="input-text">Enter your text:</label>
@@ -64,6 +64,11 @@
             </form>
             <div id="output" class="mt-5" style="display: none;">
                 <h3>Analysis Outcome:</h3>
+                <p id="dep"></p>
+                <p id="bi"></p>
+                <p id="sch"></p>
+                <p id="psy"></p>
+                <p id="ptsd"></p>
                 <p id="result"></p>
             </div>
 

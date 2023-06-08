@@ -6,30 +6,23 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from backend.dtos import BaseResponse
 from backend.sentiment_analysis.classifier import classify
-from backend.sentiment_analysis.analysis import TRUE_NEGATIVE, TRUE_POSITIVE, FALSE_NEGATIVE, FALSE_POSITIVE
+from backend.sentiment_analysis.analysis import TRUE_NEGATIVE, TRUE_POSITIVE, FALSE_NEGATIVE, FALSE_POSITIVE, run_semtiment_analysis_for_view
 
 
 @csrf_exempt
 @api_view(['POST'])
 def analyse(request):
     data = json.loads(request.body)
-    stressor: str = data["stressor"]
     statement: str = data["statement"]
-
-    if stressor is None:
-        return BaseResponse(
-            status=False,
-            message="Please select stressor"
-        )
     if statement is None:
         return BaseResponse(
             status=False,
             message="Please enter the statement to analyse"
         )
-    result = classify(stressor, statement)
+    result = run_semtiment_analysis_for_view(statement)
     return Response(data=BaseResponse(
         status=True,
-        message=__get_response(result, stressor)
+        message=result
     ).__dict__, status=status.HTTP_200_OK)
 
 
@@ -46,4 +39,4 @@ def __get_response(result: str, stressor: str) -> str:
                f"relating to {stressor}, a {FALSE_POSITIVE}"
 
     if result == FALSE_NEGATIVE:
-        return f"This statement dose not reelect any negativity, a {FALSE_NEGATIVE}"
+        return f"This statement dose not reflect any negativity, a {FALSE_NEGATIVE}"
