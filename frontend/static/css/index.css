@@ -111,4 +111,8 @@ body {
   .form-group {
     margin-bottom: 15px;
   }
-  
+
+textarea {
+  width: 300px;
+  height: 150px;
+}

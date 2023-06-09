@@ -5,8 +5,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from backend.dtos import BaseResponse
-from backend.sentiment_analysis.classifier import classify
-from backend.sentiment_analysis.analysis import TRUE_NEGATIVE, TRUE_POSITIVE, FALSE_NEGATIVE, FALSE_POSITIVE, run_semtiment_analysis_for_view
+from backend.sentiment_analysis.analysis import TRUE_NEGATIVE, TRUE_POSITIVE, FALSE_NEGATIVE, FALSE_POSITIVE, \
+    run_sentiment_analysis_for_view
 
 
 @csrf_exempt
@@ -19,7 +19,7 @@ def analyse(request):
             status=False,
             message="Please enter the statement to analyse"
         )
-    result = run_semtiment_analysis_for_view(statement)
+    result = run_sentiment_analysis_for_view(statement)
     return Response(data=BaseResponse(
         status=True,
         message=result
