@@ -9,7 +9,7 @@ def chat_completion_gbt(prompt: str, args: List):
         client = OpenAI(
             api_key=os.getenv("OPEN_API_KEY"),
         )
-        chat_completion = client.chat.completions.create(model="gpt-3.5-turbo",
+        chat_completion = client.chat.completions.create(model="gpt-4",
                                                        messages=[{"role": "user",
                                                                   "content": f"{prompt}; {args[0]}"}])
         response = chat_completion.choices[0].message.content
